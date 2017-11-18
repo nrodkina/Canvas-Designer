@@ -126,6 +126,18 @@
         .design-surface canvas:last-child {
             position: static;
         }
+
+        .grid-box {
+            border-right: 1px solid #FF0000;
+            position: absolute;
+            bottom: 0;
+            right: 0%;
+            left: 0%;
+            top: 0;
+
+
+            pointer-events:none;
+        }
         /* toolbox */
 
         .tool-box {
@@ -398,6 +410,13 @@
             background: rgb(6, 205, 255)!important;
             color: white!important;
         }
+        .grid-panel {
+            position: absolute;
+            right: 150px;
+            background-color: #FBFBFB;
+            bottom: 0;
+        }
+
         #marker-selected-color,
         #marker-selected-color-2, #pencil-selected-color,
         #pencil-selected-color-2 {
@@ -442,6 +461,21 @@
     <section class="design-surface">
         <canvas id="temp-canvas"></canvas>
         <canvas id="main-canvas"></canvas>
+    </section>
+
+    <section id="grid-box" class="grid-box">
+        <svg id="grid-canvas" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"> \
+            <defs> \
+                <pattern id="smallGrid" width="8" height="8" patternUnits="userSpaceOnUse"> \
+                    <path d="M 8 0 L 0 0 0 8" fill="none" stroke="gray" stroke-width="0.5" /> \
+                </pattern> \
+                <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"> \
+                    <rect width="80" height="80" fill="url(#smallGrid)" /> \
+                    <path d="M 80 0 L 0 0 0 80" fill="none" stroke="gray" stroke-width="1" /> \
+                </pattern> \
+            </defs> \
+            <rect width="100%" height="100%" fill="url(#smallGrid)" /> \
+        </svg>
     </section>
 
     <!-- toolbox -->
@@ -493,6 +527,10 @@
         <div id="code-preview">Code</div>
     </section>
 
+    <section class="grid-panel">
+        <button type="button" onclick="gridButtonOnClick(event)">Grid ON/OFF</button>
+
+    </section>
     <!-- options -->
 
     <section id="options-container" class="options-container">
@@ -754,6 +792,17 @@
         })();
 
         window.selectedIcon = params.selectedIcon;
+
+        function gridButtonOnClick(event){
+            //alert('Hello world1!');
+            if (document.getElementById('grid-box').style.display != 'none'){
+                document.getElementById('grid-box').style.display = 'none';
+            }else{
+                document.getElementById('grid-box').style.display = 'block';
+            }
+
+
+        };
 
         if (window.selectedIcon) {
             try {
